@@ -3,6 +3,7 @@ package com.atguigu.sparkmall0225.offline
 import com.alibaba.fastjson.JSON
 import com.atguigu.sparkmall.common.bean.UserVisitAction
 import com.atguigu.sparkmall.common.util.ConfigurationUtil
+import com.atguigu.sparkmall0225.offline.app.CategoryTop10App
 import com.atguigu.sparkmall0225.offline.util.Condition
 import org.apache.spark.sql.SparkSession
 
@@ -29,8 +30,9 @@ object OfflineApp {
 
     userVisitActionRDD.cache()
     userVisitActionRDD.checkpoint()
-    userVisitActionRDD.take(10).foreach(println)
+    //userVisitActionRDD.take(10).foreach(println)
 
+CategoryTop10App.statCategoryTop10(spark,userVisitActionRDD)
 
 
   }

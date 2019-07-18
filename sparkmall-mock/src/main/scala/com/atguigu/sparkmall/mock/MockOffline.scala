@@ -123,7 +123,7 @@ object MockOffline {
     // 开始日期
     val fromDate = dateFormatter.parse("2019-07-17")
     // 结束日期
-    val toDate = dateFormatter.parse("2019-07-24")
+    val toDate = dateFormatter.parse("2019-07-20")
 
 
     val randomDate = RandomDate(fromDate, toDate, logAboutNum)
@@ -208,9 +208,9 @@ object MockOffline {
     val cityInfoDF = sc.makeRDD(cityInfoData).toDF
 
     insertIntoHive(spark, "user_visit_action", userVisitActionDF)
-    insertIntoHive(spark, "user_info", userInfoDF)
-    insertIntoHive(spark, "product_info", productInfoDF)
-    insertIntoHive(spark, "city_info", cityInfoDF)
+   // insertIntoHive(spark, "user_info", userInfoDF)
+    //insertIntoHive(spark, "product_info", productInfoDF)
+    //insertIntoHive(spark, "city_info", cityInfoDF)
 
   }
 

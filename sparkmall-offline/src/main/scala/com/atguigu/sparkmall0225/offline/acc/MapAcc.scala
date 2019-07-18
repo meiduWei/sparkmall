@@ -50,7 +50,7 @@ class MapAcc  extends AccumulatorV2[UserVisitAction, Map[String, (Long, Long, Lo
   override def merge(other: AccumulatorV2[UserVisitAction, Map[String, (Long, Long, Long)]]): Unit = {
 
     val acc = other.asInstanceOf[MapAcc]
-    //other.asInstanceOf[MapAcc] 判断 other是否为MapAcc类型.如果是就直接将其转换为MapAcc类型.和isInstanceOf略有不同
+    //other.asInstanceOf[MapAcc] 判断 other是否为MapAcc类型.如果是就直接将其转换为MapAcc类型.和isInstanceOf略有不同.
     acc.map.foreach {
       case (key, (count1, count2, count3)) =>
         val (c1, c2, c3) = this.map.getOrElse(key, (0L, 0L, 0L))

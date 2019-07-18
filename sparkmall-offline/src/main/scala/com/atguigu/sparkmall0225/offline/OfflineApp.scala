@@ -16,7 +16,7 @@ object OfflineApp {
 
 
   def main(args: Array[String]): Unit = {
-    System.setProperty("HADOOP_USER_NAME","atguigu")
+    System.setProperty("HADOOP_USER_NAME", "atguigu")
 
     val spark = SparkSession.builder()
       .appName("OfflineApp")
@@ -26,16 +26,17 @@ object OfflineApp {
 
 
     spark.sparkContext.setCheckpointDir("hdfs://hadoop102:9000/sparkmall")
-    val userVisitActionRDD = readUserVisitActionRDD(spark,readCondition)
+    val userVisitActionRDD = readUserVisitActionRDD(spark, readCondition)
 
     userVisitActionRDD.cache()
     userVisitActionRDD.checkpoint()
     //userVisitActionRDD.take(10).foreach(println)
 
-CategoryTop10App.statCategoryTop10(spark,userVisitActionRDD)
+    CategoryTop10App.statCategoryTop10(spark, userVisitActionRDD)
 
 
   }
+
   def readUserVisitActionRDD(spark: SparkSession, condition: Condition) = {
     var sql =
       s"""

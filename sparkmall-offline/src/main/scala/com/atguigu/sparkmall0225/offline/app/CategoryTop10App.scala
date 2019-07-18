@@ -12,13 +12,12 @@ import org.apache.spark.sql.SparkSession
 object CategoryTop10App {
 
 
-
   def statCategoryTop10(spark: SparkSession, userVisitActionRDD: RDD[UserVisitAction]): Unit = {
+
     val acc = new MapAcc
     spark.sparkContext.register(acc)
     userVisitActionRDD.foreach(action => {
       acc.add(action)
-
     })
 
     val sortList = acc.value.toList.sortBy {

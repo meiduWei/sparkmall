@@ -24,7 +24,6 @@ object OfflineApp {
       .enableHiveSupport()
       .getOrCreate()
 
-
     spark.sparkContext.setCheckpointDir("hdfs://hadoop102:9000/sparkmall")
     val userVisitActionRDD = readUserVisitActionRDD(spark, readCondition)
 
@@ -63,7 +62,6 @@ object OfflineApp {
     spark.sql(sql).as[UserVisitAction].rdd
 
   }
-
 
   /**
     * 读取过滤的条件

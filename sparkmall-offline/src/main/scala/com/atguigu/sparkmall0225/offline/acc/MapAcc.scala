@@ -26,6 +26,7 @@ class MapAcc  extends AccumulatorV2[UserVisitAction, Map[String, (Long, Long, Lo
   //累加 核心代码
   override def add(v: UserVisitAction): Unit = {
     if (v.click_category_id != -1) { // 点击行为
+      val (a,b,"c"):(Int,Int,String)=(1,2,"d`")
       val (clickCount, orderCount, payCount): (Long, Long, Long) = map.getOrElse(v.click_category_id.toString, (0L, 0L, 0L))
       map += v.click_category_id.toString -> (clickCount + 1, orderCount, payCount)
 

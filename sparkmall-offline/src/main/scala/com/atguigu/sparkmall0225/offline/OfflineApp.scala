@@ -5,7 +5,7 @@ import java.util.UUID
 import com.alibaba.fastjson.JSON
 import com.atguigu.sparkmall.common.bean.UserVisitAction
 import com.atguigu.sparkmall.common.util.ConfigurationUtil
-import com.atguigu.sparkmall0225.offline.app.{CategorySessionTop10, CategoryTop10App, PageConversionApp}
+import com.atguigu.sparkmall0225.offline.app._
 import com.atguigu.sparkmall0225.offline.util.Condition
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SparkSession
@@ -35,15 +35,16 @@ object OfflineApp {
     val taskId = UUID.randomUUID().toString
 
     //需求1
-    val categoryCountTop10 = CategoryTop10App.statCategoryTop10(spark, userVisitActionRDD,taskId)
+    // val categoryCountTop10 = CategoryTop10App.statCategoryTop10(spark, userVisitActionRDD,taskId)
 
     //需求2
-    CategorySessionTop10.statCategoryTop10Session(spark,categoryCountTop10,userVisitActionRDD,taskId)
+    // CategorySessionTop10.statCategoryTop10Session(spark,categoryCountTop10,userVisitActionRDD,taskId)
 
     //需求3
-    PageConversionApp.calcPageConversionRate(spark, userVisitActionRDD, readCondition.targetPageFlow, taskId)
+    //  PageConversionApp.calcPageConversionRate(spark, userVisitActionRDD, readCondition.targetPageFlow, taskId)
 
-
+    //需求4
+    AreaProductTop3.statAreaProductTop3(spark,taskId)
 
 
   }

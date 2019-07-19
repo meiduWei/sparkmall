@@ -36,7 +36,7 @@ object OfflineApp {
     val categoryCountTop10 = CategoryTop10App.statCategoryTop10(spark, userVisitActionRDD,taskId)
 
     //需求2
-   // CategorySessionTop10.statCategoryTop10Session(spark,categoryCountTop10,userVisitActionRDD,taskId)
+   CategorySessionTop10.statCategoryTop10Session(spark,categoryCountTop10,userVisitActionRDD,taskId)
 
 
 

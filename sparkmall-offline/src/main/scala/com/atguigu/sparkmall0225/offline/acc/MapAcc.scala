@@ -7,7 +7,7 @@ import org.apache.spark.util.AccumulatorV2
   * * @Author: Wmd
   * * @Date: 2019/7/18 16:31
   */
-class MapAcc  extends AccumulatorV2[UserVisitAction, Map[String, (Long, Long, Long)]]{
+class MapAcc extends AccumulatorV2[UserVisitAction, Map[String, (Long, Long, Long)]] {
   // (cid, (clickCount, orderCount, payCount))
   var map: Map[String, (Long, Long, Long)] = Map[String, (Long, Long, Long)]()
 
@@ -15,7 +15,9 @@ class MapAcc  extends AccumulatorV2[UserVisitAction, Map[String, (Long, Long, Lo
 
   override def copy(): AccumulatorV2[UserVisitAction, Map[String, (Long, Long, Long)]] = {
     val acc = new MapAcc
-    acc.map = Map[String, (Long, Long, Long)]()
+    // acc.map = Map[String, (Long, Long, Long)]()
+    //拷贝累加器是需要把原来累加器中的内容拷贝过来
+    acc.map ++= this.map
     acc
   }
 

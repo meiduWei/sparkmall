@@ -38,7 +38,8 @@ object CategoryTop10App {
    val args =  Top10CategoryCountInfo.map { cci =>
       Array[Any](cci.taskId,cci.categoryId,cci.clickCount, cci.orderCount, cci.payCount)
     }
-
+//    category_top10
+    JDBCUtil.executeUpdate("truncate category_top10",null)
     JDBCUtil.executeBatchUpdate(sql,args)
     Top10CategoryCountInfo
 

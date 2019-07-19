@@ -5,7 +5,7 @@ import java.util.Properties
 import com.atguigu.sparkmall.common.bean.UserVisitAction
 import com.atguigu.sparkmall0225.offline.bean.{CategoryCountInfo, CategorySession}
 import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{SaveMode, SparkSession}
 
 /**
   * Author lzc
@@ -13,7 +13,7 @@ import org.apache.spark.sql.SparkSession
   */
 object CategorySessionTop10 {
 
-  def statCategoryTop10Session(spark: SparkSession, categoryCountTop10: List[CategoryCountInfo], userVisitActionRDD: RDD[UserVisitAction], taskId: String) = {
+  def statCategoryTop10Session(spark: SparkSession, categoryCountTop10: List[CategoryCountInfo], userVisitActionRDD: RDD[UserVisitAction], taskId: String): Unit = {
     //1.top10的品类Id
     val categoryIdList: List[String] = categoryCountTop10.map(_.categoryId)
     // 2. 先过滤出来top10 品类id的那些用户行为
@@ -22,6 +22,7 @@ object CategorySessionTop10 {
         categoryIdList.contains(uva.click_category_id.toString) // 判断点击action是否在top10中
       } else if (uva.order_category_ids != null) {
         val cids: Array[String] = uva.order_category_ids.split(",")
+        //intersect 相交
         categoryIdList.intersect(cids).nonEmpty // 判断下单行为是否在top10中
 
       } else if (uva.pay_category_ids != null) {
@@ -71,12 +72,12 @@ object CategorySessionTop10 {
       }
     }
 
+    //将RDD转换成DF,使用DF写出到mysql
     val props = new Properties()
     props.setProperty("user", "root")
-
     props.setProperty("password", "000000")
 
-    resultRDD.toDF().write.jdbc("jdbc:mysql://hadoop102:3306/sparkmall", "category_top10_session_count", props)
+    resultRDD.toDF().write.mode(SaveMode.Overwrite).jdbc("jdbc:mysql://hadoop102:3306/sparkmall", "category_top10_session_count", props)
 
 
   }

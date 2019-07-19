@@ -1,9 +1,11 @@
 package com.atguigu.sparkmall0225.offline
 
+import java.util.UUID
+
 import com.alibaba.fastjson.JSON
 import com.atguigu.sparkmall.common.bean.UserVisitAction
 import com.atguigu.sparkmall.common.util.ConfigurationUtil
-import com.atguigu.sparkmall0225.offline.app.CategoryTop10App
+import com.atguigu.sparkmall0225.offline.app.{CategorySessionTop10, CategoryTop10App}
 import com.atguigu.sparkmall0225.offline.util.Condition
 import org.apache.spark.sql.SparkSession
 
@@ -13,8 +15,6 @@ import org.apache.spark.sql.SparkSession
   * * @Date: 2019/7/18 15:43
   */
 object OfflineApp {
-
-
   def main(args: Array[String]): Unit = {
     System.setProperty("HADOOP_USER_NAME", "atguigu")
 
@@ -30,8 +30,14 @@ object OfflineApp {
     userVisitActionRDD.cache()
     userVisitActionRDD.checkpoint()
     //userVisitActionRDD.take(10).foreach(println)
+    val taskId = UUID.randomUUID().toString
 
-    CategoryTop10App.statCategoryTop10(spark, userVisitActionRDD)
+    //需求1
+    val categoryCountTop10 = CategoryTop10App.statCategoryTop10(spark, userVisitActionRDD,taskId)
+
+    //需求2
+   // CategorySessionTop10.statCategoryTop10Session(spark,categoryCountTop10,userVisitActionRDD,taskId)
+
 
 
   }
@@ -71,7 +77,6 @@ object OfflineApp {
   def readCondition: Condition = {
     val conditionString = ConfigurationUtil("conditions.properties").getString("condition.params.json")
     JSON.parseObject(conditionString, classOf[Condition])
-
   }
 
 }

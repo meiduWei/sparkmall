@@ -1,4 +1,4 @@
-package com.atguigu.sparkmall0225.realtime.bean
+package com.atguigu.sparkmall.realtime.bean
 
 import java.text.SimpleDateFormat
 import java.util.Date

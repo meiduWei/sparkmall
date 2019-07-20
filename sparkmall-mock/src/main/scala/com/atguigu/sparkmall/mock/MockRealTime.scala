@@ -20,7 +20,7 @@ object MockRealTime {
           某个时间点 某个地区  某个城市   某个用户  某个广告
 
        */
-  def mockRealTimeData() = {
+  def mockRealTimeData(): ArrayBuffer[String] = {
     // 存储模拟的实时数据
     val array = ArrayBuffer[String]()
     // 城市信息
@@ -44,7 +44,7 @@ object MockRealTime {
     }
     array
   }
-
+//创建kafka生产者
   def createKafkaProducer: KafkaProducer[String, String] = {
     val props = new Properties
     // Kafka服务端的主机名和端口号
@@ -64,12 +64,12 @@ object MockRealTime {
     props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
     // value序列化
     props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
-    new KafkaProducer[String, String](props)
+    new KafkaProducer[String, String](props)   //直接new出来即可.但在这之前要将配置文件封装到properties中
   }
 
   def main(args: Array[String]): Unit = {
     val topic = "ads_log"
-    val producer: KafkaProducer[String, String] = createKafkaProducer
+    val producer: KafkaProducer[String, String] = createKafkaProducer   //调用方法. 创建kafka生产者
     while (true) {
       mockRealTimeData().foreach {
         msg => {

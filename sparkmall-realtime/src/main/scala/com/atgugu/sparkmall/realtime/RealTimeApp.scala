@@ -61,7 +61,7 @@ object RealTimeApp {
     val filteredAdsInfoDSteam: DStream[AdsInfo] = BlackListApp.filterBlackList(ssc, adsInfoDStream)
     BlackListApp.checkUserToBlackList(ssc, filteredAdsInfoDSteam)
 */
-        //将DStream打印到控制台
+        //将DStream打印到控制台使用map取出value值
     recordDStream.map(record => record.value()).print
 
     ssc.start()

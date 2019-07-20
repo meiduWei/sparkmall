@@ -1,5 +1,8 @@
 package com.atguigu.sparkmall0225.offline.app
 
+import java.util.Properties
+
+import com.atguigu.sparkmall.common.util.ConfigurationUtil
 import com.atguigu.sparkmall0225.offline.udf.AreaClickUDAF
 import org.apache.spark.sql.{SaveMode, SparkSession}
 
@@ -45,6 +48,10 @@ object AreaProductTop3 {
         |from t2
       """.stripMargin).createOrReplaceTempView("t3")
 
+    val conf = ConfigurationUtil("config.properties")
+    val props = new Properties()
+    props.setProperty("user", "root")
+    props.setProperty("password", "000000")
     // 4. 取前3
     spark.sql(
       """
@@ -55,9 +62,12 @@ object AreaProductTop3 {
         | remark
         |from t3
         |where rank <= 3
-      """.stripMargin).show()    //.write.mode(SaveMode.Overwrite).jdbc()
+      """.stripMargin).write.mode(SaveMode.Overwrite)
+      .jdbc("jdbc:mysql://hadoop102:3306/sparkmall?useUnicode=true&characterEncoding=utf8","area_click_top10",props)
 
-
+  //2.如果数据库中存在中文此时需要将url写成下面的形式
+    //
+    //val url = "jdbc:mysql://localhost:3306/dbname?useUnicode=true&characterEncoding=utf8"  //
   }
 
 }

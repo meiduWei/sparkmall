@@ -1,9 +1,8 @@
-package com.atgugu.sparkmall.realtime
+package com.atguigu.sparkmall.realtime
 
 import com.atguigu.sparkmall.common.util.MyKafkaUtil
-import com.atguigu.sparkmall0225.realtime.bean.AdsInfo
 import org.apache.kafka.clients.consumer.ConsumerRecord
-import org.apache.spark.streaming.dstream.{DStream, InputDStream}
+import org.apache.spark.streaming.dstream.InputDStream
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
 
